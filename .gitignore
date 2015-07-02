@@ -2,5 +2,6 @@
 #*
 tmp/
 www/
+doc/
 *.tmp
 node_modules/
