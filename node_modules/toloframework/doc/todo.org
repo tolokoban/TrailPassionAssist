@@ -1,0 +1,39 @@
+#+STARTUP: overview
+#+TODO: TODO(t) BUG(b) | DONE(d!) TEST(v!) FIXED(f!) WAIT(w!) CANCELED(c!) REFUSED(r@/!)
+#+ARCHIVE: %s_done::
+
+* Documentation
+** Widget
+Les éléments sont préfixés par le namespace "x:".
+Par exemple :
+<x:include>page.welcome.htm</x:include>
+
+La définition du widget est recherchée d'abord dans le répertoire "wdg/" du projet.
+S'il n'existe pas, on le prends dans le répertoire "wdg/" du TFW3.
+
+Le nom du widget peut contenir des lettres minuscules, des chiffres, des ".", des "_" et des "-".
+S'il contient des majuscules, il sera converti en minuscules.
+
+Sa définition est stoquée dans un répertoire qui porte son nom.
+Ce répertoire contient un fichier "parse.js" qui est un module de nodejs et doit ressembler à ceci :
+module.exports = function() {
+   ...
+}
+
+*** L'objet "this" contient les propriétés suivantes :
+- id : identifiant de l'élément HTML. Soit il était déjà défini par un attribut, soit on en crée un.
+- root : le noeud racine de l'élément HTML.
+- Node : le module utilitaire pour manipuler les noeuds HTML.
+- tpl(name, params) : lit un fichier template et retourne son contenu après application des paramètres.
+- result : l'objet de retour défini plus bas.
+
+*** L'objet de retour peut contenir ces propriétés :
+- warning (string) : un message d'avertissement qui n'empêche pas la compilation,
+                     mais qui prévient qu'il faut s'attendre à des résultats inattendus.
+- node (object) : si cette propriété est définie, il faut remplacer l'élément root par ce noeud.
+- css (string) : CSS dynamique à ajouter à la page pour que e widget fonctionne.
+- controller (string) : nom de la classe contrôleur de ce widget.
+- extension (string) : 
+- init (object) : objet d'initialisation du contrôler du widget.
+
+* Reste à faire

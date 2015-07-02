@@ -3,3 +3,4 @@
 tmp/
 www/
 *.tmp
+node_modules/
