@@ -1,32 +1,33 @@
 {
-  "name": "TrailPassionAssist",
-  "version": "0.0.1",
-  "description": "SMS helper for long mountain trails assistance",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node node_modules/toloframework/bin/tfw.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tolokoban/TrailPassionAssist.git"
-  },
-  "keywords": [
+    "name": "TrailPassionAssist",
+    "version": "0.0.59",
+    "description": "SMS helper for long mountain trails assistance",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "node node_modules/toloframework/bin/tfw.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/tolokoban/TrailPassionAssist.git"
+    },
+    "keywords": [
     "trail-passion",
     "trail",
     "mountain",
     "GPS",
     "assistance",
     "trekking",
-    "trek"
-  ],
-  "author": "Tolokoban",
-  "license": "GPL",
-  "bugs": {
-    "url": "https://github.com/tolokoban/TrailPassionAssist/issues"
-  },
-  "homepage": "https://github.com/tolokoban/TrailPassionAssist",
-  "dependencies": {
-    "toloframework": "^0.17.1"
-  }
+    "trek"],
+    "author": "Tolokoban",
+    "license": "GPL",
+    "bugs": {
+      "url": "https://github.com/tolokoban/TrailPassionAssist/issues"
+    },
+    "homepage": "https://github.com/tolokoban/TrailPassionAssist",
+    "dependencies": {"toloframework": "^0.17.1"},
+    "tfw": {
+      "modules": [],
+      "compile": {"type": "firefoxos", "files": "\\.html$"}
+    }
 }
