@@ -1,10 +1,10 @@
 exports.config={
     name:"Trail-Passion-Assist",
-    version:"0.0.1",
+    version:"0.0.5",
     major:0,
     minor:0,
-    revision:1,
-    date:new Date(2015,6,2,11,13,41)
+    revision:5,
+    date:new Date(2015,6,2,11,28,31)
 };
 var currentLang = null;
 exports.lang = function(lang) {

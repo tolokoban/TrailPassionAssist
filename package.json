@@ -4,8 +4,10 @@
   "description": "SMS helper for long mountain trails assistance",
   "main": "index.js",
   "scripts": {
+    "env": "env",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node node_modules/toloframework/bin/tfw.js"
+    "build": "tfw",
+    "clean": "rm -rf tmp/ www/ doc/"
   },
   "repository": {
     "type": "git",
