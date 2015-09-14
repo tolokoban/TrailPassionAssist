@@ -1,6 +1,6 @@
-var Button = require("tfw.button666");
+var Button = require("wdg.button");
 
 // list matching
 var [a, , b] = [1,2,3];
 
-alert("a=" + a + "\nb=" + b);
+alert(_('welcome') + (a +b));
