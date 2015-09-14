@@ -1,24 +1,6 @@
-function $(id) {
-    return window.document.getElementById(id);
-}
+var Button = require("tfw.button666");
 
-function setLanguage(lang) {
-    require("$").lang(lang);
-    window.location = "index.html";
-}
+// list matching
+var [a, , b] = [1,2,3];
 
-$("welcome").textContent = _("welcome");
-$("fr").addEventListener(
-    "click",
-    function() {
-        setLanguage("fr");
-    },
-    false
-);
-$("en").addEventListener(
-    "click",
-    function() {
-        setLanguage("en");
-    },
-    false
-);
+alert("a=" + a + "\nb=" + b);
