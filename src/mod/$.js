@@ -2,11 +2,11 @@ exports.config={
     name:"TrailPassionAssist",
     description:"SMS helper for long mountain trails assistance",
     author:"Tolokoban",
-    version:"0.0.59",
+    version:"0.0.60",
     major:0,
     minor:0,
-    revision:59,
-    date:new Date(2015,8,13,19,29,11)
+    revision:60,
+    date:new Date(2015,8,16,8,32,23)
 };
 var currentLang = null;
 exports.lang = function(lang) {

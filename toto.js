@@ -1,17 +1,3 @@
-+---------------------+
-| ToloFrameWork 1.0.0 |
-+---------------------+
-
-[1mTrailPassionAssist v0.0.58[22m (Firefox OS)
-
-[33m/home/tolokoban/Code/github/tfw.com/ker/com/x-md/x-md.com.js[39m
-[33m/home/tolokoban/Code/github/tfw.com/ker/com/x-loop/x-loop.com.js[39m
-[33m/home/tolokoban/Code/github/tfw.com/ker/com/x-html/x-html.com.js[39m
-[33m/home/tolokoban/Code/github/tfw.com/ker/com/x-calc/x-calc.com.js[39m
-[33m/home/tolokoban/Code/github/tfw.com/ker/com/x-book/x-book.com.js[39m
-[33m/home/tolokoban/Code/github/tfw.com/ker/com/variable/variable.com.js[39m
-[33m/home/tolokoban/Code/github/tfw.com/ker/com/tag-/tag-.com.js[39m
-Compile HTML: [36mindex.html[39m
 {
   "type": {
     "label": "name",
