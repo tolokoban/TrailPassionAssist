@@ -1,12 +1,12 @@
 {
     "name": "Trail-Passion-Assist",
     "version": "0.0.1",
-    "description": "This is my first web app with the ToloFrameWork.",
+    "description": ".",
     "launch_path": "/index.html",
     "fullscreen": "false",
     "developer": {
-        "name": "My Name",
-        "url": "http://my-website.org"
+        "name": "Tolokoban",
+        "url": "http://trail-passion.net"
     },
     "icons": {
         "60": "/icon-60.png",

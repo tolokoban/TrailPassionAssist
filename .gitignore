@@ -1,5 +1,7 @@
+src/mod/$.js
 *~
-#*
+*#
+.#*
 tmp/
 www/
 doc/

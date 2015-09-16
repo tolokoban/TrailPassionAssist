@@ -1,0 +1,14 @@
+div.tp4-wait {
+    display: inline-table;
+}
+
+div.tp4-wait > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.tp4-wait > div:last-child {
+    font-family: sans-serif;
+    font-size: 14px;
+    padding-left: 12px;
+}

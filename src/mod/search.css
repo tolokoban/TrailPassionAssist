@@ -1,0 +1,13 @@
+div.tpa-search-result-item {
+    cursor: pointer;
+    margin: .3rem 0;
+    padding: .3rem;
+    background-image:linear-gradient(to right,transparent, rgba(255,128,0,.2));
+    border-right: .5rem solid orange;
+}
+
+div.tpa-search-result-item > div:last-child {
+    color: orange;
+    font-size: .7rem;
+    text-align: left
+}

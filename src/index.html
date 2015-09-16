@@ -1,7 +1,31 @@
 <x-html app="main">
-    <x-book>
-        <x-page hash="welcome">
+    <x-book id="BOOK">
+        <welcome>
             <h1>Trail-Passion Assist</h1>
-        </x-page>
+            <section>
+                
+                <hr>
+                <x-widget id="sms" name="wdg.input-phone">{"save":"tpa.sms"}</x-widget>
+                <hr>
+                <a href="#/book/search">Load a new trace</a>
+            </section>
+        </welcome>
+        <search>
+            <h1>Search for a trace</h1>
+            <section>
+                <x-widget id="search" name="wdg.input" />
+                <br>
+                <a href="#/book/welcome">Back</a>
+            </section>
+        </search>
+        <loading>
+            <h1>Loading trace...</h1>
+            <center><strong id="trace-loading"></strong>
+                <br><br>
+                <x-widget name="tp4.wait">
+                    {"size": 128, "color": "orange"}
+                </x-widget>
+            </center>
+        </loading>
     </x-book>
 </x-html>
