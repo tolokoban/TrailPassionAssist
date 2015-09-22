@@ -54,7 +54,7 @@ a[disabled], button[disabled] {
 a:active,
 button:active {
     text-decoration: underline;
-    box-shadow: 0 0 .3em orange;
+    box-shadow: 0 0 .5em .1em orange;
 }
 
 #dashboard {
