@@ -1,16 +1,24 @@
 {
-    "name": "Trail-Passion-Assist",
-    "version": "0.0.1",
-    "description": ".",
-    "launch_path": "/index.html",
-    "fullscreen": "false",
-    "developer": {
-        "name": "Tolokoban",
-        "url": "http://trail-passion.net"
+  "name": "TrailPassionAssist",
+  "version": "0.0.214",
+  "description": "SMS helper for long mountain trails assistance",
+  "launch_path": "/index.html",
+  "fullscreen": "false",
+  "developer": {
+    "name": "Tolokoban",
+    "url": "http://trail-passion.net"
+  },
+  "icons": {
+    "60": "/icon-60.png",
+    "128": "/icon-128.png",
+    "256": "/icon-256.png"
+  },
+  "permissions": {
+    "systemXHR": {
+      "description": "Required to exchange data with \"http://trail-passion.net\"."
     },
-    "icons": {
-        "60": "/icon-60.png",
-        "128": "/icon-128.png",
-        "256": "/icon-256.png"
+    "storage": {
+      "description": "Required to save profiles."
     }
+  }
 }

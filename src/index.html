@@ -1,14 +1,17 @@
 <x-html app="main">
     <x-book id="BOOK">
         <welcome>
-            <h1>Trail-Passion Assist</h1>
+            <h1 id="trace-name">Trail-Passion Assist</h1>
             <section>
-                
+                <div id="dashboard">No loaded trace...</div>
                 <hr>
-                <x-widget id="sms" name="wdg.input-phone">{"save":"tpa.sms"}</x-widget>
-                <hr>
-                <a href="#/book/search">Load a new trace</a>
+                <center>
+                    <x-widget id="sms" name="wdg.input-phone">{"save":"tpa.sms"}</x-widget>
+                    <hr>
+                    <a href="#/book/search">Load a new trace</a>
+                </center>
             </section>
+            <div class="footnote">version: <$$version/></div>
         </welcome>
         <search>
             <h1>Search for a trace</h1>

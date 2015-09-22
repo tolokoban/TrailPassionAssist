@@ -6,7 +6,7 @@ html {
     background-size:     contain;
     background-image:    url(main/background.svg);
     background-color:    #000;
-    font-size: 4vmin;
+    font-size: 5.1vmin;
     font-family: sans-serif;
     color: #eee;
 }
@@ -16,7 +16,7 @@ h1 {
     display: block;
     margin: 0 0 1rem 0;    
     line-height: 2rem;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 300;
     text-align: left;
     padding: 0 .5rem;
@@ -24,16 +24,77 @@ h1 {
     background-color: rgba(255,128,0,.2);
 }
 
+hr {
+    border: none;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, #fff, transparent);
+}
+
 section {
     margin: 1rem;
     padding: 0;
 }
 
-a {
+a, button {
     display: inline-block;
     color: #000;
     background-color: #9cd;
     border-radius: 1rem;
     line-height: 2rem;
     padding: 0 2rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a[disabled], button[disabled] {
+    background-color: #aaa;
+    cursor: default;
+}
+
+a:active,
+button:active {
+    text-decoration: underline;
+    box-shadow: 0 0 .3em orange;
+}
+
+#dashboard {
+    margin: .2rem;
+    padding: .5rem;
+    border-radius: .3rem;
+    background-color: rgba(150, 150, 150, .5);
+}
+
+#dashboard > div.step {
+    color: orange;
+    padding-left: 4rem;
+}
+
+#dashboard > div.marker > div {
+    display: inline-block;
+    line-height: 1.5rem;
+}
+
+#dashboard > div.marker > div:first-child {
+    text-align: center;
+    background-color: #fff;
+    color: #000;
+    font-weight: bold;
+    width: 3.4rem;
+    padding: 0;
+    margin: 1px .5em 1px 0;
+    border-radius: .3rem;
+}
+
+input {
+    font-size: 1rem;
+    fonr-family: monospace;
+}
+
+div.footnote {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 80%;
+    text-align: right;
+    margin: 3rem 1rem 1rem 1rem;
 }

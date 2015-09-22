@@ -35,11 +35,11 @@ module.exports = function(id, slot) {
                 },
                 function (err) {
                     console.error(err);
-                    result.clear(D("tpa-error").text(JSON.stringify(err)));
+                    result.clear(D("tpa-error").text(err.err));
                 }
             );
         }, 300);
-    input.Change(function () {
+    input.Enter(function () {
         action.fire();
     });
 };

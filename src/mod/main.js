@@ -1,11 +1,15 @@
 var WS = require("tfw.web-service");
 var Hash = require("tfw.hash-watcher");
+var Widget = require("wdg");
 var Storage = require("tfw.storage").local;
-
 var TraceTools = require("tp4.trace-tools");
 
+var LG = require("tfw.layout-grid").create;
+var D = Widget.div;
+var T = Widget.tag;
 
-WS.config('url', 'http:trail-passion.net/tfw');
+WS.config('url', 'http://trail-passion.net/tfw');
+
 
 var book = null;
 
@@ -28,6 +32,8 @@ Hash(function () {
 
 
 exports.start = function() {
+    setInterval(refresh, 59000);
+    refresh();
     require("search")('search', function (traceId, traceName) {
         document.getElementById('trace-loading').textContent = traceName;
         location = "#/book/loading";
@@ -77,6 +83,10 @@ exports.start = function() {
                     console.log(data);
                     Storage.set("tpa.trace", data);
                     Storage.set("tpa.step", 0);
+                },
+                function (err) {
+                    console.error(err);
+                    alert(err.err);
                 }
             );
         }, 300);
@@ -84,13 +94,54 @@ exports.start = function() {
 };
 
 
+function refresh() {
+    var data = Storage.get("tpa.trace", null);
+    if (!data) return;
+
+    var step = parseInt(Storage.get("tpa.step", 0));
+    document.getElementById('trace-name').textContent = data.name;
+    var board = new Widget({id: 'dashboard'}),
+    mrk1 = data.text[step],
+    mrk2 = data.text[step + 1],
+    now = Date.now(),
+    tim1 = formatDate(now),
+    tim2 = '--:--',
+    btnSMS = T('a').text(_('send_sms'));
+
+    btnSMS.Tap(function () {
+        sendSMS(
+            tim1 + " - " + mrk1.txt + "\n"
+            + tim2 + " - " + mrk2.txt
+        );
+    });
+    
+console.info("[main] mrk1=...", mrk1);
+console.info("[main] mrk2=...", mrk2);
+
+    board.clear(
+        D('marker').append(
+            D().text(tim1),
+            D().text(mrk1.txt)
+        ),
+        D('marker').append(
+            D().text(tim2),
+            D().text(mrk2.txt)
+        ),
+        D('step').text((mrk2.km - mrk1.km).toFixed(1) + " km, "
+                      + Math.floor(mrk2.asc - mrk1.asc) + " D+, "
+                      + Math.floor(mrk2.dsc - mrk1.dsc) + " D-"),
+        LG([btnSMS])
+    );
+}
+
 function sendSMS(message) {
+    var smsNumber = Storage.get("tpa.sms", "");
     if ('MozActivity' in window) {
         var sms = new MozActivity({
             name: "new",
             data: {
                 type: "websms/sms",
-                number: document.getElementById('sms').$ctrl.val(),
+                number: smsNumber,
                 body: message
             }
         });
@@ -102,6 +153,18 @@ function sendSMS(message) {
             console.info("Success", this);
         };
     } else {
-        alert(message);
+        alert(smsNumber + "\n\n" + message);
     }
+}
+
+
+function formatDate(ms) {
+    if (typeof ms === 'undefined') ms = Date.now();
+    var date = new Date(ms),
+    mm = date.getMinutes(),
+    hh = date.getHours();
+    if (mm < 10) {
+        mm = "0" + mm;
+    }
+    return hh + ":" + mm;
 }
