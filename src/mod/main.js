@@ -1,4 +1,5 @@
 var WS = require("tfw.web-service");
+var Time = require("time");
 var Hash = require("tfw.hash-watcher");
 var Widget = require("wdg");
 var Storage = require("tfw.storage").local;
@@ -24,15 +25,17 @@ function showPage(pageID) {
 Hash(function () {
     var hashes = Hash.hash().split(';');
     hashes.forEach(function (hash) {
+        var page;
         if (hash.substr(0, 6) == '/book/') {
-            showPage(hash.substr(6));
+            page = hash.substr(6);
+            showPage(page);
+            refresh();
         }
     });
 });
 
 
 exports.start = function() {
-    setInterval(refresh, 59000);
     refresh();
     require("search")('search', function (traceId, traceName) {
         document.getElementById('trace-loading').textContent = traceName;
@@ -101,38 +104,156 @@ function refresh() {
     var step = parseInt(Storage.get("tpa.step", 0));
     document.getElementById('trace-name').textContent = data.name;
     var board = new Widget({id: 'dashboard'}),
-    mrk1 = data.text[step],
-    mrk2 = data.text[step + 1],
-    now = Date.now(),
-    tim1 = formatDate(now),
-    tim2 = '--:--',
-    btnSMS = T('a').text(_('send_sms'));
+        btnSMS = T('a').text(_('send_sms')),
+        btnTime = T('a').text(_('adjust_time'));
 
     btnSMS.Tap(function () {
-        sendSMS(
-            tim1 + " - " + mrk1.txt + "\n"
-            + tim2 + " - " + mrk2.txt
+        setStep(step);
+        var steps = getSteps(),
+            msg = '';
+        steps.forEach(function (mrk, idx, arr) {
+            if (idx > 0) {
+                var previousMarker = arr[idx - 1];
+                msg += ''
+                    + (mrk.km - previousMarker.km).toFixed(1) + " km"
+                    + ' +' + Math.floor(mrk.asc - previousMarker.asc)
+                    + ' -' + Math.floor(mrk.dsc - previousMarker.dsc) + "\n";
+            }
+            msg += mrk.tim + ' ' + mrk.txt + "\n";
+        });
+
+        sendSMS(msg);
+        refresh();
+    });
+
+    btnTime.Tap(function () {
+        Time(data.text[step].txt, function (ms) {
+console.info("[main] ms=...", ms);
+            setStep(step, ms);
+            refresh();
+        });
+    });
+
+    var btnPrev = T('a').text("◀");
+    var btnNext = T('a').text("▶");
+    if (step == 0) {
+        btnPrev.attr("disabled", "true");
+    } else {
+        btnPrev.Tap(function () {
+            step--;
+            Storage.set("tpa.step", step);
+            refresh();
+        });
+    }
+    if (step >= data.text.length - 2) {
+        btnNext.attr("disabled", "true");
+    } else {
+        btnNext.Tap(function () {
+            step++;
+            Storage.set("tpa.step", step);
+            refresh();
+        });
+    }
+    board.clear(LG([btnPrev, btnNext]).addClass("wide").css("margin-bottom", "1rem"));
+
+    getSteps().forEach(function (mrk, idx, arr) {
+        if (idx > 0) {
+            var previousMarker = arr[idx - 1];
+            board.append(
+                D('step').text(
+                    (mrk.km - previousMarker.km).toFixed(1) + " km, "
+                        + Math.floor(mrk.asc - previousMarker.asc) + " D+, "
+                        + Math.floor(mrk.dsc - previousMarker.dsc) + " D-")
+            );
+        }
+        board.append(
+            D('marker').append(
+                D().text(mrk.tim),
+                D().text(mrk.txt)
+            )
         );
     });
-    
-console.info("[main] mrk1=...", mrk1);
-console.info("[main] mrk2=...", mrk2);
 
-    board.clear(
-        D('marker').append(
-            D().text(tim1),
-            D().text(mrk1.txt)
-        ),
-        D('marker').append(
-            D().text(tim2),
-            D().text(mrk2.txt)
-        ),
-        D('step').text((mrk2.km - mrk1.km).toFixed(1) + " km, "
-                      + Math.floor(mrk2.asc - mrk1.asc) + " D+, "
-                      + Math.floor(mrk2.dsc - mrk1.dsc) + " D-"),
-        LG([btnSMS])
+    board.append(
+        LG([btnSMS, btnTime]).css("width", "100%").styles({
+            R: "center"
+        }).css("margin-top", "1rem")
     );
 }
+
+function setStep(step, ms) {
+    var data = Storage.get("tpa.trace", null);
+    if (!data) return;
+    var markers = data.text;
+    if (typeof ms === 'undefined') {
+        if (markers[0].tim) return;
+        ms = Date.now();
+    }
+    markers[step].tim = ms;
+    step++;
+    while (step < markers.length) {
+        delete markers[step].tim;
+        step++;
+    }
+    Storage.set("tpa.trace", data);
+}
+
+function getSteps() {
+    var data = Storage.get("tpa.trace", null);
+    if (!data) return [];
+    var step = parseInt(Storage.get("tpa.step", 0)),
+        lastStep = step + 3,
+        result = [],
+        mrk,
+        tim;
+    document.getElementById('trace-name').textContent = data.name;
+    while (step < Math.min(lastStep + 1, data.text.length)) {
+        mrk = data.text[step];
+        tim = mrk.tim || 0;
+        if (tim == 0) {
+            tim = estimateTime(data.text, step);
+        }
+        result.push(
+            {
+                txt: mrk.txt,
+                km: mrk.km,
+                asc: mrk.asc,
+                dsc: mrk.dsc,
+                tim: Time.format(tim)
+            }
+        );
+        step++;
+    }
+    return result;
+}
+
+function estimateTime(markers, step) {
+    if (step < 2) return 0;
+    if (markers[step].tim) return markers[step].tim;
+    var tim0 = markers[0].tim || 0,
+        tim1 = 0,
+        dis1 = 0,
+        tim,
+        dis = 0,
+        idx,
+        mrk,
+        speed;
+    for (idx = 1; idx <= step; idx++) {
+        mrk = markers[idx];
+        tim = mrk.tim || 0;
+        dis = mrk.dis;
+        if (tim != 0) {
+            tim1 = tim;
+            dis1 = dis;
+        }
+    }
+    if (dis < 0.1) return 0;
+    if (dis1 < 0.1) return 0;
+    if (tim1 < 0.1) return 0;
+    speed = dis1 / (tim1 - tim0);
+    return tim0 + dis / speed;
+}
+
 
 function sendSMS(message) {
     var smsNumber = Storage.get("tpa.sms", "");
@@ -158,13 +279,3 @@ function sendSMS(message) {
 }
 
 
-function formatDate(ms) {
-    if (typeof ms === 'undefined') ms = Date.now();
-    var date = new Date(ms),
-    mm = date.getMinutes(),
-    hh = date.getHours();
-    if (mm < 10) {
-        mm = "0" + mm;
-    }
-    return hh + ":" + mm;
-}

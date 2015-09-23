@@ -1,0 +1,12 @@
+div.time {
+    font-size: 20vw;
+    color: #eee;
+    font-family: monospace;
+}
+
+div.date {
+    margin: 3rem 0;
+    font-size: 6vmin;
+    color: orange;
+    text-align: center;
+}

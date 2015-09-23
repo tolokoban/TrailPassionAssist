@@ -1,0 +1,63 @@
+a.tp4-button {
+    display: inline-table;
+    border-collapse: separate;
+    border-radius: 12px;
+    height: 24px;
+    color: #000;
+    background-color: #9cd;
+    font-size: 12px;
+    margin: 4px;
+    padding: 0 12px;
+    text-shadow: none;
+    box-shadow: 1px 1px rgba(0,0,0,.5);
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1em;
+}
+
+a.tp4-button.warning {
+    background-color: #c50;
+    color: #fff;
+}
+
+a.tp4-button.simple {
+    display: inline-table;
+    border-radius: none;
+    height: auto;
+    color: #9CD;
+    background: none;
+    margin: 4px;
+    text-shadow: none;
+    box-shadow: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.tp4-button.simple:hover {
+    color: #9CD;
+}
+
+a.tp4-button[disabled=yes]:hover,
+a.tp4-button[disabled=yes] {
+    text-decoration: none;
+    cursor: default;
+    background: #888;
+    color: #ccc;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+a.tp4-button:hover {
+    text-decoration: underline;
+}
+
+a.tp4-button:active {
+    transform: translate(1px,1px);
+    box-shadow: none;
+}
+
+
+a.tp4-button > * {
+    display: table-cell;
+    vertical-align: middle;
+}

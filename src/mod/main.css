@@ -31,7 +31,7 @@ hr {
 }
 
 section {
-    margin: 1rem;
+    margin: .2rem;
     padding: 0;
 }
 
@@ -41,7 +41,7 @@ a, button {
     background-color: #9cd;
     border-radius: 1rem;
     line-height: 2rem;
-    padding: 0 2rem;
+    padding: 0 1rem;
     text-decoration: none;
     cursor: pointer;
 }

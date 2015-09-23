@@ -1,6 +1,6 @@
 {
     "name": "TrailPassionAssist",
-    "version": "0.0.218",
+    "version": "0.0.282",
     "description": "SMS helper for long mountain trails assistance",
     "main": "index.js",
     "scripts": {
