@@ -186,7 +186,7 @@ function setStep(step, ms) {
     if (!data) return;
     var markers = data.text;
     if (typeof ms === 'undefined') {
-        if (markers[0].tim) return;
+        if (markers[step].tim) return;
         ms = Date.now();
     }
     markers[step].tim = ms;
