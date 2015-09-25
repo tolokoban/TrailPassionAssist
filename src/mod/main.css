@@ -35,6 +35,13 @@ section {
     padding: 0;
 }
 
+.tp4-button.custom {
+    font-size: 1rem;
+    border-radius: 1rem;
+    line-height: 2rem;
+    padding: 0 1rem;
+}
+
 a, button {
     display: inline-block;
     color: #000;

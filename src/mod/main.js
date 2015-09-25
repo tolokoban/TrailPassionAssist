@@ -121,7 +121,8 @@ function refresh() {
             }
             msg += mrk.tim + ' ' + mrk.txt + "\n";
         });
-
+        step++;
+        Storage.set('tpa.step', step);
         sendSMS(msg);
         refresh();
     });
