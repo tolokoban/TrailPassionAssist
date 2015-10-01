@@ -52,7 +52,7 @@ exports.start = function() {
                     data.text.forEach(function (mrk) {
                         if (mrk.img && mrk.img.length > 0) {
                             for (k = 0; k < 4; k++) {
-                                if (mrk.img.indexOf('LSGC'.charAt(k))) {
+                                if (mrk.img.indexOf('LSGC'.charAt(k)) > -1) {
                                     markers.push(mrk);
                                     break;
                                 }
